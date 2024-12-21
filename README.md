@@ -1,4 +1,4 @@
-# Active Directory Lab: Part 2 - Configuring AD and Joining a Client
+# Active Directory Lab: Part 2 - Configuring and Deploying AD and Joining a Client
 
 ## Overview
 In this part of the lab, I expanded the Active Directory setup by creating Organizational Units (OUs), managing domain users, and joining the client machine to the domain.
