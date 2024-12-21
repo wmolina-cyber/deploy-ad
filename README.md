@@ -1,49 +1,61 @@
-# Active Directory Lab: Part 2 - Deploying Active Directory
+# Active Directory Lab: Part 2 - Configuring AD and Joining a Client
 
 ## Overview
-In this part of the lab, I set up an Active Directory (AD) infrastructure in Azure by deploying a domain controller, creating a forest, and preparing the environment for domain administration.
+In this part of the lab, I expanded the Active Directory setup by creating Organizational Units (OUs), managing domain users, and joining the client machine to the domain.
 
 ---
 
 ## Steps Performed
 
-### 1. Install Active Directory Domain Services
-- I logged into **DC-1** and installed the **Active Directory Domain Services** (AD DS) role through the Server Manager.  
-  ![Screenshot: AD DS Installation](path-to-screenshot/ad-ds-installation.png)
+### 1. Create Organizational Units (OUs)
+- I logged into **DC-1** as `mydomain.com\labuser` and opened **Active Directory Users and Computers (ADUC)**.  
+- Created the following Organizational Units (OUs):
+  - `_EMPLOYEES`
+  - `_ADMINS`
+- These OUs will help organize users and groups logically.  
+  ![Screenshot: Created OUs](path-to-screenshot/created-ous.png)
 
-### 2. Promote DC-1 to a Domain Controller
-- I promoted **DC-1** to a domain controller and created a new forest named `mydomain.com`.  
-  - Selected "Add a new forest" option during configuration.
-  - Specified the domain name as `mydomain.com`.
-- After completing the setup, the VM restarted automatically.  
-  ![Screenshot: Promote DC to Domain Controller](path-to-screenshot/promote-dc.png)
+### 2. Add a Domain Admin User
+- Within the `_ADMINS` OU, I created a new user:
+  - **Name**: Jane Doe  
+  - **Username**: `jane_admin`  
+  - **Password**: `Cyberlab123!`  
+- Assigned the `jane_admin` account to the **Domain Admins** security group.
+- Logged out of **DC-1** and logged back in as `mydomain.com\jane_admin` to verify the account's administrative privileges.  
+  ![Screenshot: Domain Admin Created](path-to-screenshot/domain-admin-created.png)
 
-### 3. Login to the Domain
-- I logged back into **DC-1** using the credentials: `mydomain.com\labuser` and confirmed the domain controller was properly configured.  
-  ![Screenshot: Login as Domain Admin](path-to-screenshot/domain-login.png)
-
-### 4. Disable the Windows Firewall (Testing Purposes)
-- I disabled the Windows Firewall on **DC-1** temporarily to facilitate connectivity testing between machines.  
-  ![Screenshot: Firewall Disabled](path-to-screenshot/firewall-disabled.png)
+### 3. Join Client-1 to the Domain
+- I set **Client-1**'s DNS settings to the private IP address of **DC-1** (already done in Part 1).
+- Restarted **Client-1** from the Azure Portal to ensure the DNS settings applied.
+- Logged into **Client-1** as the local administrator (`labuser`) and joined it to the `mydomain.com` domain:
+  - Went to **System Properties** > **Computer Name** > **Change** and entered the domain name `mydomain.com`.
+  - Provided domain credentials (`jane_admin`) when prompted.  
+  - Restarted **Client-1** to apply the changes.  
+- Verified in ADUC that **Client-1** appeared under **Computers**.
+- Moved **Client-1** to the `_CLIENTS` OU for better organization.  
+  ![Screenshot: Client-1 Joined Domain](path-to-screenshot/client-joined-domain.png)
 
 ---
 
 ## Observations
-- The domain `mydomain.com` was successfully created, and the domain controller is operational.  
-- The AD DS role is installed, and the domain is ready for additional configurations.  
+- The Organizational Units (_EMPLOYEES, _ADMINS, and _CLIENTS) were successfully created and logically structure the domain.  
+- **Client-1** was successfully joined to the `mydomain.com` domain and appears in the correct OU in ADUC.  
+- The `jane_admin` account has full domain administrative privileges and functions as expected.
 
 ---
 
 ## Notes
-- Disabling the firewall was only for testing purposes. In production environments, it's essential to configure security rules instead of disabling the firewall entirely.
+- Ensuring the correct DNS settings is critical for domain connectivity.
+- In production, consider using Group Policies to automate tasks like moving domain computers to the appropriate OUs.
 
 ---
 
 ## What's Next?
 In **Part 3**, I will:
-1. Create and configure Organizational Units (OUs) in Active Directory.
-2. Add a domain administrator user and additional accounts.
-3. Join **Client-1** to the domain and verify connectivity between the machines.
-Stay tuned as we build out the AD environment further!
+1. Configure Remote Desktop access for non-administrative users.  
+2. Use PowerShell to create multiple user accounts in bulk.  
+3. Test domain authentication using newly created accounts.  
+
+Stay tuned for the next part as I enhance and test domain functionalities!
 
 ---
