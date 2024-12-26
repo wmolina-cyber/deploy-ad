@@ -1,4 +1,5 @@
 # Active Directory Lab: Part 2 - Configuring and Deploying AD and Joining a Client
+![image](https://github.com/user-attachments/assets/7fadf434-2b70-4f76-a0f7-1f9513fec347)
 
 ## Overview
 In this part of the lab, I expanded the Active Directory setup by creating Organizational Units (OUs), managing domain users, and joining the client machine to the domain.
@@ -13,7 +14,7 @@ In this part of the lab, I expanded the Active Directory setup by creating Organ
   - `_EMPLOYEES`
   - `_ADMINS`
 - These OUs will help organize users and groups logically.  
-  ![Screenshot: Created OUs](path-to-screenshot/created-ous.png)
+![33](https://github.com/user-attachments/assets/03d48808-3582-4d38-ac86-175b1baf70a0)
 
 ### 2. Add a Domain Admin User
 - Within the `_ADMINS` OU, I created a new user:
@@ -21,8 +22,8 @@ In this part of the lab, I expanded the Active Directory setup by creating Organ
   - **Username**: `jane_admin`  
   - **Password**: `Cyberlab123!`  
 - Assigned the `jane_admin` account to the **Domain Admins** security group.
+![41](https://github.com/user-attachments/assets/56c54912-3d6c-44ea-a4de-5b801809b3cc)
 - Logged out of **DC-1** and logged back in as `mydomain.com\jane_admin` to verify the account's administrative privileges.  
-  ![Screenshot: Domain Admin Created](path-to-screenshot/domain-admin-created.png)
 
 ### 3. Join Client-1 to the Domain
 - I set **Client-1**'s DNS settings to the private IP address of **DC-1** (already done in Part 1).
@@ -30,10 +31,11 @@ In this part of the lab, I expanded the Active Directory setup by creating Organ
 - Logged into **Client-1** as the local administrator (`labuser`) and joined it to the `mydomain.com` domain:
   - Went to **System Properties** > **Computer Name** > **Change** and entered the domain name `mydomain.com`.
   - Provided domain credentials (`jane_admin`) when prompted.  
-  - Restarted **Client-1** to apply the changes.  
+  - Restarted **Client-1** to apply the changes.
+![51](https://github.com/user-attachments/assets/3eab3da6-5891-45a3-98d6-686011da70b2)
 - Verified in ADUC that **Client-1** appeared under **Computers**.
 - Moved **Client-1** to the `_CLIENTS` OU for better organization.  
-  ![Screenshot: Client-1 Joined Domain](path-to-screenshot/client-joined-domain.png)
+![57](https://github.com/user-attachments/assets/9ed71695-57c5-405f-87cb-3de9df5d746a)
 
 ---
 
